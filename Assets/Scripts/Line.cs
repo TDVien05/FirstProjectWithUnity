@@ -13,14 +13,22 @@ public class Line : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        xDirection = Input.GetAxisRaw("Horizontal");
+        float xDirection = Input.GetAxisRaw("Horizontal");
+        float yDirection = Input.GetAxisRaw("Vertical");
 
-        float moveStep = 1.5f * xDirection * Time.deltaTime;
+        float moveSpeed = 5.0f;
+        float xMoveStep = moveSpeed * xDirection * Time.deltaTime;
+        float yMoveStep = moveSpeed * yDirection * Time.deltaTime;
 
-        if((transform.position.x <= -8f && moveStep < 0) || (transform.position.x >= 8f && moveStep > 0))
+        // Horizontal boundary check
+        if ((transform.position.x <= -8f && xMoveStep < 0) || (transform.position.x >= 8f && xMoveStep > 0))
             return;
+        // Vertical boundary check
+        if ((transform.position.y <= -3f && yMoveStep < 0) || (transform.position.y >= 4f && yMoveStep > 0))
+            return;
+        
 
-        transform.position = transform.position + new Vector3(moveStep, 0, 0);
+        transform.position = transform.position + new Vector3(xMoveStep, yMoveStep, 0);
         
     }
 }
